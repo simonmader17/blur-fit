@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -65,19 +67,61 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class StartingScreen extends StatelessWidget {
+class StartingScreen extends StatefulWidget {
   const StartingScreen({super.key});
 
   @override
+  State<StartingScreen> createState() => _StartingScreenState();
+}
+
+class _StartingScreenState extends State<StartingScreen> {
+  // Active image file
+  File? _imageFile;
+
+  Future<void> _pickImage() async {
+    XFile? selected =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (selected == null) {
+      return;
+    }
+    setState(() {
+      _imageFile = File(selected.path);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_imageFile != null) {
+      return ImageEditor(_imageFile!);
+    }
     return Center(
         child: Container(
             decoration: const BoxDecoration(
                 gradient: gradient,
                 borderRadius: BorderRadius.all(Radius.circular(18))),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                _pickImage();
+              },
               child: const Text("Import Image"),
             )));
+  }
+}
+
+class ImageEditor extends StatefulWidget {
+  const ImageEditor(this.imageFile, {super.key});
+
+  final File imageFile;
+
+  @override
+  State<ImageEditor> createState() => _ImageEditorState();
+}
+
+class _ImageEditorState extends State<ImageEditor> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Image.file(widget.imageFile),
+    );
   }
 }
