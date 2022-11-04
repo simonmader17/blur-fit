@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         title: 'Blur Fit',
         theme: ThemeData(
             fontFamily: "LilitaOne",
-            scaffoldBackgroundColor: const Color(0xff212121),
+            scaffoldBackgroundColor: const Color(0xff171717),
             textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -51,17 +51,19 @@ class MyApp extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                     padding: const EdgeInsets.all(20)))),
         home: Scaffold(
-          body: SafeArea(
-              child: Stack(children: const [
-            StartingScreen(),
-            Positioned(
-              left: 17,
-              top: 8,
-              child: GradientText("Blur Fit",
-                  grad: gradient,
-                  style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
-            )
-          ])),
+          appBar: AppBar(
+            // title: GradientText("Blur Fit",
+            //     grad: gradient,
+            //     style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
+            // backgroundColor: Color(0xff171717),
+            // elevation: 0,
+            title: const Text("Blur Fit",
+                style: TextStyle(
+                    fontFamily: "JotiOne", fontSize: 44, color: Colors.white)),
+            flexibleSpace:
+                Container(decoration: const BoxDecoration(gradient: gradient)),
+          ),
+          body: const SafeArea(child: StartingScreen()),
         ));
   }
 }
