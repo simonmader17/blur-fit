@@ -1,3 +1,4 @@
+import 'package:blur_fit/my_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -33,15 +34,17 @@ class _StartingScreenState extends State<StartingScreen> {
       return ImageEditor(_imageFile!);
     }
     return Center(
-        child: Container(
-            decoration: const BoxDecoration(
-                gradient: gradient,
-                borderRadius: BorderRadius.all(Radius.circular(18))),
-            child: TextButton(
-              onPressed: () {
-                _pickImage();
-              },
-              child: const Text("Import Image"),
+        child: MyButton(
+            onPressed: () {
+              _pickImage();
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.image, size: 36),
+                SizedBox(width: 6),
+                Text("Import Image"),
+              ],
             )));
   }
 }
