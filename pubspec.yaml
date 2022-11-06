@@ -39,6 +39,7 @@ dependencies:
   path_provider: ^2.0.11
   image_gallery_saver: ^1.7.1
   intl: ^0.17.0
+  gradient_borders: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -105,6 +106,6 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/icon.png"
-  adaptive_icon_foreground: "assets/icon/icon_foreground.png"
+  image_path: "assets/icon/icon2.png"
+  adaptive_icon_foreground: "assets/icon/icon2_foreground.png"
   adaptive_icon_background: "#ffffff"

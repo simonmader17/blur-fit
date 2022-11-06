@@ -65,69 +65,74 @@ class _ImageEditorState extends State<ImageEditor> {
         children: [
           AspectRatio(
               aspectRatio: 1 / 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(18),
-                child: Stack(children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          color: const Color(0xff212121),
-                          borderRadius: BorderRadius.circular(0)),
-                      child: Column(children: [
-                        Expanded(
-                            child: Center(
-                                child: RepaintBoundary(
-                          key: _globalKey,
-                          child: Stack(
-                            children: [
-                              AspectRatio(
-                                aspectRatio: _aspectRatio,
-                                child: ClipRRect(
-                                  child: ImageFiltered(
-                                      imageFilter: ui.ImageFilter.blur(
-                                          sigmaX: _blurIntensity,
-                                          sigmaY: _blurIntensity),
-                                      child: Image.file(widget.imageFile,
-                                          fit: BoxFit.cover)),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [myBoxShadow]),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: Stack(children: [
+                    Container(
+                        decoration: BoxDecoration(
+                            color: const Color(0xff212121),
+                            borderRadius: BorderRadius.circular(0)),
+                        child: Column(children: [
+                          Expanded(
+                              child: Center(
+                                  child: RepaintBoundary(
+                            key: _globalKey,
+                            child: Stack(
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: _aspectRatio,
+                                  child: ClipRRect(
+                                    child: ImageFiltered(
+                                        imageFilter: ui.ImageFilter.blur(
+                                            sigmaX: _blurIntensity,
+                                            sigmaY: _blurIntensity),
+                                        child: Image.file(widget.imageFile,
+                                            fit: BoxFit.cover)),
+                                  ),
                                 ),
-                              ),
-                              AspectRatio(
-                                aspectRatio: _aspectRatio,
-                                child: FittedBox(
-                                  child: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(200),
-                                          image: DecorationImage(
-                                              fit: BoxFit.fill,
-                                              image:
-                                                  FileImage(widget.imageFile))),
-                                      child: Image.file(widget.imageFile,
-                                          fit: BoxFit.contain)),
+                                AspectRatio(
+                                  aspectRatio: _aspectRatio,
+                                  child: FittedBox(
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(200),
+                                            image: DecorationImage(
+                                                fit: BoxFit.fill,
+                                                image: FileImage(
+                                                    widget.imageFile))),
+                                        child: Image.file(widget.imageFile,
+                                            fit: BoxFit.contain)),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )))
-                      ])),
-                  Positioned(
-                      right: 20,
-                      bottom: 20,
-                      child: MyButton(
-                        onPressed: () {
-                          _capturePng();
-                        },
-                        child: const Icon(Icons.download),
-                      )),
-                  Positioned(
-                      left: 20,
-                      bottom: 20,
-                      child: MyButton(
+                              ],
+                            ),
+                          )))
+                        ])),
+                    Positioned(
+                        right: 20,
+                        bottom: 20,
+                        child: MyButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const MyApp()));
+                            _capturePng();
                           },
-                          child: const Icon(Icons.refresh)))
-                ]),
+                          child: const Icon(Icons.download),
+                        )),
+                    Positioned(
+                        left: 20,
+                        bottom: 20,
+                        child: MyButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const MyApp()));
+                            },
+                            child: const Icon(Icons.refresh)))
+                  ]),
+                ),
               )),
           const SizedBox(height: 17),
           Expanded(
@@ -135,6 +140,50 @@ class _ImageEditorState extends State<ImageEditor> {
                   decoration: const BoxDecoration(),
                   child: ListView(
                     children: [
+                      Row(
+                        children: [
+                          Flexible(
+                              child: MySelectableButton(
+                            onPressed: () {
+                              setState(() {
+                                _aspectRatio = 1 / 2;
+                              });
+                            },
+                            selected: _aspectRatio == 1 / 2,
+                            child: const Text("1 : 2",
+                                style: TextStyle(fontSize: 25)),
+                          )),
+                          const SizedBox(
+                            width: 17,
+                          ),
+                          Flexible(
+                              child: MySelectableButton(
+                            onPressed: () {
+                              setState(() {
+                                _aspectRatio = 9 / 16;
+                              });
+                            },
+                            selected: _aspectRatio == 9 / 16,
+                            child: const Text("9 : 16",
+                                style: TextStyle(fontSize: 25)),
+                          )),
+                          const SizedBox(
+                            width: 17,
+                          ),
+                          Flexible(
+                              child: MySelectableButton(
+                            onPressed: () {
+                              setState(() {
+                                _aspectRatio = 1;
+                              });
+                            },
+                            selected: _aspectRatio == 1,
+                            child: const Text("1 : 1",
+                                style: TextStyle(fontSize: 25)),
+                          )),
+                        ],
+                      ),
+                      const SizedBox(height: 17),
                       MySlider(
                         title: "Aspect Ratio",
                         value: _aspectRatio,
@@ -146,6 +195,7 @@ class _ImageEditorState extends State<ImageEditor> {
                           });
                         },
                       ),
+                      const SizedBox(height: 17),
                       MySlider(
                         title: "Blur Intensity",
                         value: _blurIntensity,
@@ -157,6 +207,7 @@ class _ImageEditorState extends State<ImageEditor> {
                           });
                         },
                       ),
+                      const SizedBox(height: 17),
                       MySlider(
                         title: "Border Radius",
                         value: _borderRadius,
@@ -168,6 +219,7 @@ class _ImageEditorState extends State<ImageEditor> {
                           });
                         },
                       ),
+                      const SizedBox(height: 17),
                       MySlider(
                         title: "Inset",
                         value: _inset,
