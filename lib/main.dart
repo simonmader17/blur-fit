@@ -1,5 +1,6 @@
 import 'package:blur_fit/starting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'my_widgets.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Blur Fit',
         theme: ThemeData(
+            useMaterial3: true,
             fontFamily: "LilitaOne",
             scaffoldBackgroundColor: const Color(0xff171717),
             textButtonTheme: TextButtonThemeData(
@@ -29,11 +31,14 @@ class MyApp extends StatelessWidget {
                         fontWeight: FontWeight.w400),
                     padding: const EdgeInsets.all(20))),
             colorScheme: ColorScheme.fromSwatch().copyWith(
-                primary: Color(0xffff0000), secondary: Color(0xff3300c3))),
+                primary: const Color(0xffff0000),
+                secondary: const Color(0xff3300c3))),
         home: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
             appBar: AppBar(
+              systemOverlayStyle: SystemUiOverlayStyle.light
+                  .copyWith(systemNavigationBarColor: const Color(0xff171717)),
               // title: GradientText("Blur Fit",
               //     grad: gradient,
               //     style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
