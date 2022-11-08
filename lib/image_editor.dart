@@ -281,7 +281,9 @@ class _ImageEditorState extends State<ImageEditor> {
                     title: "Border Radius",
                     value: _borderRadius,
                     min: 0,
-                    max: 20,
+                    max: ui.window.physicalSize.width /
+                        2 /
+                        ui.window.devicePixelRatio,
                     onChanged: (double value) {
                       setState(() {
                         _borderRadius = value;
@@ -293,7 +295,7 @@ class _ImageEditorState extends State<ImageEditor> {
                     title: "Inset",
                     value: _inset,
                     min: 0,
-                    max: 10,
+                    max: 100,
                     onChanged: (double value) {
                       setState(() {
                         _inset = value;
@@ -340,18 +342,16 @@ class _ImageEditorState extends State<ImageEditor> {
                                 ),
                                 AspectRatio(
                                   aspectRatio: _aspectRatio,
-                                  child: FittedBox(
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            // borderRadius:
-                                            //     BorderRadius.circular(200),
-                                            image: DecorationImage(
-                                                fit: BoxFit.fill,
-                                                image: FileImage(
-                                                    widget.imageFile))),
-                                        child: Image.file(widget.imageFile,
-                                            fit: BoxFit.contain)),
-                                  ),
+                                  child: Center(
+                                      child: Container(
+                                    margin: EdgeInsets.all(_inset),
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(_borderRadius),
+                                      child: Image.file(widget.imageFile,
+                                          fit: BoxFit.contain),
+                                    ),
+                                  )),
                                 ),
                               ],
                             ),
