@@ -6,10 +6,16 @@ import 'dart:io';
 
 import 'image_editor.dart';
 
-class StartingScreen extends StatelessWidget {
+class StartingScreen extends StatefulWidget {
   const StartingScreen({super.key});
 
-  Future<void> _pickImage(BuildContext context) async {
+  @override
+  State<StartingScreen> createState() => _StartingScreenState();
+}
+
+class _StartingScreenState extends State<StartingScreen> {
+  Future<void> _pickImage(
+      BuildContext context, void Function(File imageFile) onSuccess) async {
     File imageFile;
 
     XFile? selected =
@@ -19,8 +25,7 @@ class StartingScreen extends StatelessWidget {
     }
     imageFile = File(selected.path);
 
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ImageEditor(imageFile)));
+    onSuccess(imageFile);
   }
 
   @override
@@ -33,11 +38,6 @@ class StartingScreen extends StatelessWidget {
                 statusBarColor: const Color(0x00000000),
                 systemNavigationBarColor: const Color(0xff171717),
               ),
-              // title: GradientText("Blur Fit",
-              //     grad: gradient,
-              //     style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
-              // backgroundColor: Color(0xff171717),
-              // elevation: 0,
               title: const Text("Blur Fit",
                   style: TextStyle(
                       fontFamily: "JotiOne",
@@ -49,7 +49,13 @@ class StartingScreen extends StatelessWidget {
             body: Center(
                 child: MyButton(
                     onPressed: () {
-                      _pickImage(context);
+                      _pickImage(context, (File imageFile) {
+                        if (!mounted) return;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ImageEditor(imageFile)));
+                      });
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

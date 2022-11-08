@@ -61,11 +61,6 @@ class _ImageEditorState extends State<ImageEditor> {
                 systemNavigationBarColor: const Color(0xff171717),
               ),
               automaticallyImplyLeading: false,
-              // title: GradientText("Blur Fit",
-              //     grad: gradient,
-              //     style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
-              // backgroundColor: Color(0xff171717),
-              // elevation: 0,
               title: const Text("Blur Fit",
                   style: TextStyle(
                       fontFamily: "JotiOne",
