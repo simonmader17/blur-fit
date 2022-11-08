@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'utility.dart';
 
 var myBoxShadow = BoxShadow(
