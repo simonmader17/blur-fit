@@ -37,8 +37,10 @@ class MyApp extends StatelessWidget {
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Scaffold(
             appBar: AppBar(
-              systemOverlayStyle: SystemUiOverlayStyle.light
-                  .copyWith(systemNavigationBarColor: const Color(0xff171717)),
+              systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+                statusBarColor: const Color(0x00000000),
+                systemNavigationBarColor: const Color(0xff171717),
+              ),
               // title: GradientText("Blur Fit",
               //     grad: gradient,
               //     style: TextStyle(fontSize: 44, fontFamily: "JotiOne")),
@@ -52,7 +54,7 @@ class MyApp extends StatelessWidget {
               flexibleSpace: Container(
                   decoration: const BoxDecoration(gradient: myGradient)),
             ),
-            body: const SafeArea(child: StartingScreen()),
+            body: const StartingScreen(),
           ),
         ));
   }

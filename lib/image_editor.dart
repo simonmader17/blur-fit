@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
+import 'generate_image.dart';
+
 class ImageEditor extends StatefulWidget {
   const ImageEditor(this.imageFile, {super.key});
 
@@ -21,7 +23,7 @@ class ImageEditor extends StatefulWidget {
 
 class _ImageEditorState extends State<ImageEditor> {
   double _aspectRatio = 1;
-  double _blurIntensity = 3;
+  double _blurIntensity = 10;
   double _borderRadius = 0;
   double _inset = 0;
 
@@ -51,36 +53,7 @@ class _ImageEditorState extends State<ImageEditor> {
     }
   }
 
-  final GlobalKey _globalKey = new GlobalKey();
-
-  Future<Uint8List> _capturePng() async {
-    try {
-      print('inside');
-      print(widget.imageFile);
-      RenderRepaintBoundary boundary = _globalKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 10.0);
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png) as ByteData;
-      var pngBytes = byteData.buffer.asUint8List();
-      var bs64 = base64Encode(pngBytes);
-      print(pngBytes);
-      print(bs64);
-
-      int timestamp = DateTime.now().millisecondsSinceEpoch;
-      DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
-      String fdatetime = DateFormat("yyyy-mm-dd_HHmms").format(tsdate);
-      print(fdatetime);
-      await ImageGallerySaver.saveImage(pngBytes, name: fdatetime);
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Saved to gallery")));
-
-      return pngBytes;
-    } catch (e) {
-      print(e);
-      rethrow;
-    }
-  }
+  final GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -389,7 +362,13 @@ class _ImageEditorState extends State<ImageEditor> {
                         bottom: 20,
                         child: MyButton(
                           onPressed: () {
-                            _capturePng();
+                            generateImage(
+                                context,
+                                _globalKey.currentContext?.findRenderObject()
+                                    as RenderRepaintBoundary,
+                                widget.imageFile,
+                                _aspectRatio,
+                                0);
                           },
                           child: const Icon(Icons.download),
                         )),
