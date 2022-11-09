@@ -19,8 +19,11 @@ class ImageEditor extends StatefulWidget {
 class _ImageEditorState extends State<ImageEditor> {
   double _aspectRatio = 1;
   double _blurIntensity = 10;
-  double _borderRadius = 0;
-  double _inset = 0;
+  double _borderRadiusPercentage = 0;
+  double _insetPercentage = 0;
+
+  double halfOfImagesSmallestSide =
+      ((ui.window.physicalSize.width / 2) / ui.window.devicePixelRatio - 17);
 
   double _numer = 0;
   double _denum = 0;
@@ -305,26 +308,24 @@ class _ImageEditorState extends State<ImageEditor> {
                           const SizedBox(height: 17),
                           MySlider(
                             title: "Border Radius",
-                            value: _borderRadius,
+                            value: _borderRadiusPercentage,
                             min: 0,
-                            max: ui.window.physicalSize.width /
-                                2 /
-                                ui.window.devicePixelRatio,
+                            max: 1,
                             onChanged: (double value) {
                               setState(() {
-                                _borderRadius = value;
+                                _borderRadiusPercentage = value;
                               });
                             },
                           ),
                           const SizedBox(height: 17),
                           MySlider(
                             title: "Inset",
-                            value: _inset,
+                            value: _insetPercentage,
                             min: 0,
-                            max: 100,
+                            max: 1,
                             onChanged: (double value) {
                               setState(() {
-                                _inset = value;
+                                _insetPercentage = value;
                               });
                             },
                           ),
@@ -372,11 +373,25 @@ class _ImageEditorState extends State<ImageEditor> {
                                           aspectRatio: _aspectRatio,
                                           child: Center(
                                               child: Container(
-                                            margin: EdgeInsets.all(_inset),
+                                            margin: EdgeInsets.all(
+                                                halfOfImagesSmallestSide /
+                                                    (_aspectRatio >= 1
+                                                        ? _aspectRatio
+                                                        : 1 / _aspectRatio) *
+                                                    _insetPercentage),
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      _borderRadius),
+                                              borderRadius: BorderRadius.circular(
+                                                  (halfOfImagesSmallestSide -
+                                                          halfOfImagesSmallestSide /
+                                                              (_aspectRatio >= 1
+                                                                  ? _aspectRatio
+                                                                  : 1 /
+                                                                      _aspectRatio) *
+                                                              _insetPercentage) /
+                                                      (_aspectRatio >= 1
+                                                          ? _aspectRatio
+                                                          : 1 / _aspectRatio) *
+                                                      _borderRadiusPercentage),
                                               child: Image.file(
                                                   widget.imageFile,
                                                   fit: BoxFit.contain),
