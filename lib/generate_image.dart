@@ -3,17 +3,16 @@ import 'dart:ui' as ui;
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 Future<Uint8List> generateImage(
-    BuildContext context,
     RenderRepaintBoundary imageBoundary,
     File imageSource,
     double aspectRatio,
-    int destRes) async {
+    int destRes,
+    Function onSuccess) async {
   try {
     if (destRes <= 0) {
       var decodedImage =
@@ -42,8 +41,7 @@ Future<Uint8List> generateImage(
     String fdatetime = DateFormat("yyyy-mm-dd_HHmms").format(tsdate);
     // print(fdatetime);
     await ImageGallerySaver.saveImage(pngBytes, name: fdatetime);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text("Saved to gallery")));
+    onSuccess();
 
     return pngBytes;
   } catch (e) {

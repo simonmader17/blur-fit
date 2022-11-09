@@ -25,6 +25,11 @@ class _ImageEditorState extends State<ImageEditor> {
   double _numer = 0;
   double _denum = 0;
 
+  bool _optionsDialogIsOpen = false;
+
+  final GlobalKey _imagePreviewerKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final TextEditingController numerController = TextEditingController();
   final TextEditingController denumController = TextEditingController();
   void clearTextFields() {
@@ -48,13 +53,12 @@ class _ImageEditorState extends State<ImageEditor> {
     }
   }
 
-  final GlobalKey _globalKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
+            key: _scaffoldKey,
             appBar: AppBar(
               systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
                 statusBarColor: const Color(0x00000000),
@@ -348,7 +352,7 @@ class _ImageEditorState extends State<ImageEditor> {
                                   Expanded(
                                       child: Center(
                                           child: RepaintBoundary(
-                                    key: _globalKey,
+                                    key: _imagePreviewerKey,
                                     child: Stack(
                                       children: [
                                         AspectRatio(
@@ -388,14 +392,67 @@ class _ImageEditorState extends State<ImageEditor> {
                                 bottom: 20,
                                 child: MyButton(
                                   onPressed: () {
-                                    generateImage(
-                                        context,
-                                        _globalKey.currentContext
-                                                ?.findRenderObject()
-                                            as RenderRepaintBoundary,
-                                        widget.imageFile,
-                                        _aspectRatio,
-                                        0);
+                                    setState(() {
+                                      _optionsDialogIsOpen = true;
+                                    });
+                                    showDialog(
+                                        context: _scaffoldKey.currentContext!,
+                                        builder: (context) => AlertDialog(
+                                              backgroundColor:
+                                                  const Color(0xff171717),
+                                              titleTextStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: "LilitaOne",
+                                                  fontSize: 32),
+                                              contentTextStyle: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: "LilitaOne",
+                                                  fontSize: 27),
+                                              title: const Text("Options"),
+                                              content: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: const [
+                                                    Text("Resolution")
+                                                  ]),
+                                              actions: [
+                                                MyGenerateImageButton(
+                                                    onPressed: () {
+                                                  generateImage(
+                                                      _imagePreviewerKey
+                                                              .currentContext
+                                                              ?.findRenderObject()
+                                                          as RenderRepaintBoundary,
+                                                      widget.imageFile,
+                                                      _aspectRatio,
+                                                      0, () {
+                                                    if (!mounted) return;
+                                                    ScaffoldMessenger.of(
+                                                            _scaffoldKey
+                                                                .currentContext!)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    "Saved to gallery")));
+                                                  }).then(
+                                                    (value) {
+                                                      if (_optionsDialogIsOpen) {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      }
+                                                    },
+                                                  );
+                                                })
+                                              ],
+                                              actionsAlignment:
+                                                  MainAxisAlignment.center,
+                                            )).then((value) {
+                                      setState(() {
+                                        _optionsDialogIsOpen = false;
+                                      });
+                                    });
                                   },
                                   child: const Icon(Icons.download),
                                 )),
@@ -413,6 +470,41 @@ class _ImageEditorState extends State<ImageEditor> {
                 ),
               ],
             )));
+  }
+}
+
+class MyGenerateImageButton extends StatefulWidget {
+  const MyGenerateImageButton({super.key, required this.onPressed});
+
+  final Function onPressed;
+
+  @override
+  State<MyGenerateImageButton> createState() => _MyGenerateImageButtonState();
+}
+
+class _MyGenerateImageButtonState extends State<MyGenerateImageButton> {
+  Widget child = const Text(
+    "Generate Image",
+    style: const TextStyle(fontSize: 27),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return MyButton(
+      onPressed: () {
+        setState(() {
+          child = Row(
+            children: const [
+              Text("Generating", style: const TextStyle(fontSize: 27)),
+              SizedBox(width: 10),
+              CircularProgressIndicator(color: Colors.white)
+            ],
+          );
+        });
+        widget.onPressed();
+      },
+      child: child,
+    );
   }
 }
 
