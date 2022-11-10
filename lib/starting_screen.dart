@@ -1,3 +1,4 @@
+import 'package:blur_fit/constants.dart';
 import 'package:blur_fit/my_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,7 @@ class _StartingScreenState extends State<StartingScreen> {
               ),
               title: const Text("Blur Fit",
                   style: TextStyle(
-                      fontFamily: "JotiOne",
+                      fontFamily: APP_BAR_FONT,
                       fontSize: 44,
                       color: Colors.white)),
               flexibleSpace: Container(

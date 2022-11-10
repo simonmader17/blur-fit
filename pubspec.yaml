@@ -65,9 +65,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: JotiOne
+    - family: CarterOne
       fonts:
-        - asset: assets/fonts/JotiOne-Regular.ttf
+        - asset: assets/fonts/CarterOne-Regular.ttf
     - family: LilitaOne
       fonts:
         - asset: assets/fonts/LilitaOne-Regular.ttf

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui' as ui;
+import 'package:blur_fit/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:blur_fit/my_widgets.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class _ImageEditorState extends State<ImageEditor> {
               automaticallyImplyLeading: false,
               title: const Text("Blur Fit",
                   style: TextStyle(
-                      fontFamily: "JotiOne",
+                      fontFamily: APP_BAR_FONT,
                       fontSize: 44,
                       color: Colors.white)),
               flexibleSpace: Container(
@@ -172,7 +173,7 @@ class _ImageEditorState extends State<ImageEditor> {
                             children: [
                               const Text("Custom Aspect Ratio: ",
                                   style: TextStyle(
-                                      fontFamily: "LilitaOne",
+                                      fontFamily: APP_FONT,
                                       fontSize: 27,
                                       color: Colors.white)),
                               Flexible(
@@ -219,14 +220,14 @@ class _ImageEditorState extends State<ImageEditor> {
                                               borderSide: const BorderSide(
                                                   color: Color(0xff212121)))),
                                       style: const TextStyle(
-                                          fontFamily: "LilitaOne",
+                                          fontFamily: APP_FONT,
                                           fontSize: 22,
                                           color: Colors.white)),
                                 ),
                               ),
                               const Text(" : ",
                                   style: TextStyle(
-                                      fontFamily: "LilitaOne",
+                                      fontFamily: APP_FONT,
                                       fontSize: 22,
                                       color: Colors.white)),
                               Flexible(
@@ -273,7 +274,7 @@ class _ImageEditorState extends State<ImageEditor> {
                                               borderSide: const BorderSide(
                                                   color: Color(0xff212121)))),
                                       style: const TextStyle(
-                                        fontFamily: "LilitaOne",
+                                        fontFamily: APP_FONT,
                                         fontSize: 22,
                                         color: Colors.white,
                                       )),
@@ -427,11 +428,11 @@ class _ImageEditorState extends State<ImageEditor> {
                                                   const Color(0xff171717),
                                               titleTextStyle: const TextStyle(
                                                   color: Colors.white,
-                                                  fontFamily: "LilitaOne",
+                                                  fontFamily: APP_FONT,
                                                   fontSize: 32),
                                               contentTextStyle: const TextStyle(
                                                   color: Colors.white,
-                                                  fontFamily: "LilitaOne",
+                                                  fontFamily: APP_FONT,
                                                   fontSize: 27),
                                               title: const Text("Options"),
                                               content: Column(
