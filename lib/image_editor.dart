@@ -383,7 +383,8 @@ class _ImageEditorState extends State<ImageEditor> {
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.circular(
                                                   (halfOfImagesSmallestSide -
-                                                          halfOfImagesSmallestSide /
+                                                          2 *
+                                                              halfOfImagesSmallestSide /
                                                               (_aspectRatio >= 1
                                                                   ? _aspectRatio
                                                                   : 1 /
