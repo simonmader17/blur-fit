@@ -29,6 +29,7 @@ class _ImageEditorState extends State<ImageEditor> {
   double _denum = 0;
 
   bool _optionsDialogIsOpen = false;
+  bool _imageIsGenerating = false;
 
   final GlobalKey _imagePreviewerKey = GlobalKey();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -407,6 +408,14 @@ class _ImageEditorState extends State<ImageEditor> {
                                 bottom: 20,
                                 child: MyButton(
                                   onPressed: () {
+                                    if (_imageIsGenerating) {
+                                      ScaffoldMessenger.of(
+                                              _scaffoldKey.currentContext!)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "Image is generating...")));
+                                      return;
+                                    }
                                     setState(() {
                                       _optionsDialogIsOpen = true;
                                     });
@@ -435,6 +444,12 @@ class _ImageEditorState extends State<ImageEditor> {
                                               actions: [
                                                 MyGenerateImageButton(
                                                     onPressed: () {
+                                                  if (_imageIsGenerating) {
+                                                    return;
+                                                  }
+                                                  setState(() {
+                                                    _imageIsGenerating = true;
+                                                  });
                                                   generateImage(
                                                       _imagePreviewerKey
                                                               .currentContext
@@ -453,6 +468,10 @@ class _ImageEditorState extends State<ImageEditor> {
                                                                     "Saved to gallery")));
                                                   }).then(
                                                     (value) {
+                                                      setState(() {
+                                                        _imageIsGenerating =
+                                                            false;
+                                                      });
                                                       if (_optionsDialogIsOpen) {
                                                         Navigator.of(context)
                                                             .pop();
@@ -489,9 +508,9 @@ class _ImageEditorState extends State<ImageEditor> {
 }
 
 class MyGenerateImageButton extends StatefulWidget {
-  const MyGenerateImageButton({super.key, required this.onPressed});
+  const MyGenerateImageButton({super.key, this.onPressed});
 
-  final Function onPressed;
+  final Function? onPressed;
 
   @override
   State<MyGenerateImageButton> createState() => _MyGenerateImageButtonState();
@@ -500,7 +519,7 @@ class MyGenerateImageButton extends StatefulWidget {
 class _MyGenerateImageButtonState extends State<MyGenerateImageButton> {
   Widget child = const Text(
     "Generate Image",
-    style: const TextStyle(fontSize: 27),
+    style: TextStyle(fontSize: 27),
   );
 
   @override
@@ -510,13 +529,13 @@ class _MyGenerateImageButtonState extends State<MyGenerateImageButton> {
         setState(() {
           child = Row(
             children: const [
-              Text("Generating", style: const TextStyle(fontSize: 27)),
+              Text("Generating", style: TextStyle(fontSize: 27)),
               SizedBox(width: 10),
               CircularProgressIndicator(color: Colors.white)
             ],
           );
         });
-        widget.onPressed();
+        if (widget.onPressed != null) widget.onPressed!();
       },
       child: child,
     );
