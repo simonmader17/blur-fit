@@ -27,14 +27,14 @@ Future<Uint8List> generateImage(
             ? imageBoundary.size.height
             : imageBoundary.size
                 .width); // pick pixelRatio so, that the images smaller side is equal to destRes
-
+    print(pixelRatio);
     ui.Image image = await imageBoundary.toImage(pixelRatio: pixelRatio);
     ByteData byteData =
         await image.toByteData(format: ui.ImageByteFormat.png) as ByteData;
     var pngBytes = byteData.buffer.asUint8List();
     var bs64 = base64Encode(pngBytes);
-    // print(pngBytes);
-    // print(bs64);
+    print(pngBytes);
+    print(bs64);
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
