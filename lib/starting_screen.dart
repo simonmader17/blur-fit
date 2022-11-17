@@ -15,8 +15,8 @@ class StartingScreen extends StatefulWidget {
 }
 
 class _StartingScreenState extends State<StartingScreen> {
-  Future<void> _pickImage(
-      BuildContext context, void Function(File imageFile) onSuccess) async {
+  Future<void> _pickImage(BuildContext context,
+      void Function(File imageFile, int sourceResolution) onSuccess) async {
     File imageFile;
 
     XFile? selected =
@@ -25,8 +25,12 @@ class _StartingScreenState extends State<StartingScreen> {
       return;
     }
     imageFile = File(selected.path);
+    var decodedImage = await decodeImageFromList(imageFile.readAsBytesSync());
+    int sourceResolution = decodedImage.width > decodedImage.height
+        ? decodedImage.height
+        : decodedImage.width;
 
-    onSuccess(imageFile);
+    onSuccess(imageFile, sourceResolution);
   }
 
   @override
@@ -50,12 +54,14 @@ class _StartingScreenState extends State<StartingScreen> {
             body: Center(
                 child: MyButton(
                     onPressed: () {
-                      _pickImage(context, (File imageFile) {
+                      _pickImage(context,
+                          (File imageFile, int sourceResolution) {
                         if (!mounted) return;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ImageEditor(imageFile)));
+                                builder: (context) => ImageEditor(imageFile,
+                                    sourceResolution: sourceResolution)));
                       });
                     },
                     child: Row(

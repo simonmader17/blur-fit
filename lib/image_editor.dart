@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:blur_fit/constants.dart';
+import 'package:blur_fit/my_dialog_builder.dart';
 import 'package:flutter/services.dart';
 import 'package:blur_fit/my_widgets.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,11 @@ import 'package:flutter/rendering.dart';
 import 'generate_image.dart';
 
 class ImageEditor extends StatefulWidget {
-  const ImageEditor(this.imageFile, {super.key});
+  const ImageEditor(this.imageFile,
+      {super.key, required this.sourceResolution});
 
   final File imageFile;
+  final int sourceResolution;
 
   @override
   State<ImageEditor> createState() => _ImageEditorState();
@@ -418,68 +421,39 @@ class _ImageEditorState extends State<ImageEditor> {
                                     });
                                     showDialog(
                                         context: _scaffoldKey.currentContext!,
-                                        builder: (context) => AlertDialog(
-                                              backgroundColor:
-                                                  const Color(0xff171717),
-                                              titleTextStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: APP_FONT,
-                                                  fontSize: 32),
-                                              contentTextStyle: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontFamily: APP_FONT,
-                                                  fontSize: 27),
-                                              title: const Text("Options"),
-                                              content: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: const [
-                                                    Text("Resolution")
-                                                  ]),
-                                              actions: [
-                                                MyGenerateImageButton(
-                                                    onPressed: () {
-                                                  if (_imageIsGenerating) {
-                                                    return;
-                                                  }
-                                                  setState(() {
-                                                    _imageIsGenerating = true;
-                                                  });
-                                                  generateImage(
-                                                      _imagePreviewerKey
-                                                              .currentContext
-                                                              ?.findRenderObject()
-                                                          as RenderRepaintBoundary,
-                                                      widget.imageFile,
-                                                      _aspectRatio,
-                                                      0, () {
-                                                    if (!mounted) return;
-                                                    ScaffoldMessenger.of(
-                                                            _scaffoldKey
-                                                                .currentContext!)
-                                                        .showSnackBar(
-                                                            const SnackBar(
-                                                                content: Text(
-                                                                    "Saved to gallery")));
-                                                  }).then(
-                                                    (value) {
-                                                      setState(() {
-                                                        _imageIsGenerating =
-                                                            false;
-                                                      });
-                                                      if (_optionsDialogIsOpen) {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      }
-                                                    },
-                                                  );
-                                                })
-                                              ],
-                                              actionsAlignment:
-                                                  MainAxisAlignment.center,
-                                            )).then((value) {
+                                        builder: (context) => myDialogBuilder(
+                                                context,
+                                                widget.sourceResolution,
+                                                (selectedResolution) {
+                                              if (_imageIsGenerating) {
+                                                return;
+                                              }
+                                              setState(() {
+                                                _imageIsGenerating = true;
+                                              });
+                                              generateImage(
+                                                  _imagePreviewerKey
+                                                          .currentContext
+                                                          ?.findRenderObject()
+                                                      as RenderRepaintBoundary,
+                                                  widget.imageFile,
+                                                  _aspectRatio,
+                                                  selectedResolution, () {
+                                                if (!mounted) return;
+                                                ScaffoldMessenger.of(
+                                                        _scaffoldKey
+                                                            .currentContext!)
+                                                    .showSnackBar(const SnackBar(
+                                                        content: Text(
+                                                            "Saved to gallery")));
+                                                setState(() {
+                                                  _imageIsGenerating = false;
+                                                });
+                                                if (_optionsDialogIsOpen) {
+                                                  Navigator.of(context).pop();
+                                                }
+                                              });
+                                            })).then((value) {
                                       setState(() {
                                         _optionsDialogIsOpen = false;
                                       });
@@ -503,57 +477,3 @@ class _ImageEditorState extends State<ImageEditor> {
             )));
   }
 }
-
-class MyGenerateImageButton extends StatefulWidget {
-  const MyGenerateImageButton({super.key, this.onPressed});
-
-  final Function? onPressed;
-
-  @override
-  State<MyGenerateImageButton> createState() => _MyGenerateImageButtonState();
-}
-
-class _MyGenerateImageButtonState extends State<MyGenerateImageButton> {
-  Widget child = const Text(
-    "Generate Image",
-    style: TextStyle(fontSize: 27),
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return MyButton(
-      onPressed: () {
-        setState(() {
-          child = Row(
-            children: const [
-              Text("Generating", style: TextStyle(fontSize: 27)),
-              SizedBox(width: 10),
-              CircularProgressIndicator(color: Colors.white)
-            ],
-          );
-        });
-        if (widget.onPressed != null) widget.onPressed!();
-      },
-      child: child,
-    );
-  }
-}
-
-// class MyCheckbox extends StatelessWidget {
-//   const MyCheckbox({super.key, required this.child});
-
-//   final Widget child;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return AspectRatio(
-//       aspectRatio: 1 / 1,
-//       child: Container(
-//           margin: EdgeInsets.only(left: 17),
-//           decoration: BoxDecoration(
-//               color: Color(0xff212121),
-//               borderRadius: BorderRadius.circular(18)),
-//           child: child),
-//     );
-//   }
-// }

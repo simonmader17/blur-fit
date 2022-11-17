@@ -140,3 +140,59 @@ class MySlider extends StatelessWidget {
     );
   }
 }
+
+class MyCheckbox extends StatelessWidget {
+  const MyCheckbox(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.selected,
+      this.onClick});
+
+  final String title;
+  final int value;
+  final bool selected;
+  final void Function()? onClick;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onClick,
+      child: Container(
+        margin: const EdgeInsets.all(4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            selected
+                ? SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                          gradient: myGradient,
+                          borderRadius: BorderRadius.circular(25 / 2)),
+                      child: const Center(
+                          child:
+                              Icon(Icons.check, size: 20, color: Colors.white)),
+                    ),
+                  )
+                : SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: DecoratedBox(
+                        decoration: BoxDecoration(
+                            color: const Color(0xff212121),
+                            borderRadius: BorderRadius.circular(25 / 2))),
+                  ),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(
+                  fontFamily: "LilitaOne", fontSize: 23, color: Colors.white),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
