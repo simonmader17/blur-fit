@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.blur_fit">
+    package="at.simonmader.blur_fit">
    <application
         android:label="Blur Fit"
         android:name="${applicationName}"

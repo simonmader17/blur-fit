@@ -1,4 +1,4 @@
-package com.example.blur_fit
+package at.simonmader.blur_fit
 
 import io.flutter.embedding.android.FlutterActivity
 
