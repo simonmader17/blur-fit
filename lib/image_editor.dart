@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:blur_fit/my_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'generate_image.dart';
 
@@ -61,6 +62,23 @@ class _ImageEditorState extends State<ImageEditor> {
     }
   }
 
+  File? backgroundImage;
+
+  Future<void> _pickBackgroundImage() async {
+    File backgroundImageFile;
+
+    XFile? selected =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (selected == null) {
+      return;
+    }
+
+    backgroundImageFile = File(selected.path);
+    setState(() {
+      backgroundImage = backgroundImageFile;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -93,9 +111,7 @@ class _ImageEditorState extends State<ImageEditor> {
                       child: ListView(
                         padding: const EdgeInsets.all(17),
                         children: [
-                          const SizedBox(
-                            height: 17,
-                          ),
+                          const SizedBox(height: 17),
                           Row(
                             children: [
                               Flexible(
@@ -285,6 +301,20 @@ class _ImageEditorState extends State<ImageEditor> {
                               )
                             ],
                           ),
+                          // const SizedBox(height: 17),
+                          // FittedBox(
+                          //     fit: BoxFit.fitWidth,
+                          //     child: Row(
+                          //       children: [
+                          //         Text("Select different background image: ",
+                          //             style: TextStyle(
+                          //                 fontFamily: APP_FONT,
+                          //                 fontSize: 22,
+                          //                 color: Colors.white)),
+                          //         MyButton(
+                          //             child: Text("test"), onPressed: () {})
+                          //       ],
+                          //     )),
                           const SizedBox(height: 17),
                           MySlider(
                             title: "Aspect Ratio",
@@ -334,6 +364,37 @@ class _ImageEditorState extends State<ImageEditor> {
                               });
                             },
                           ),
+                          const SizedBox(
+                            height: 34,
+                          ),
+                          backgroundImage == null
+                              ? MyButton(
+                                  onPressed: _pickBackgroundImage,
+                                  child: FittedBox(
+                                      fit: BoxFit.fitWidth,
+                                      child: Row(
+                                        children: const [
+                                          Icon(Icons.image, size: 36),
+                                          SizedBox(width: 6),
+                                          Text(
+                                              "Select different background image"),
+                                        ],
+                                      )))
+                              : MyButton(
+                                  child: FittedBox(
+                                      fit: BoxFit.fitWidth,
+                                      child: Row(
+                                        children: const [
+                                          Icon(Icons.refresh, size: 36),
+                                          SizedBox(width: 6),
+                                          Text("Reset background image")
+                                        ],
+                                      )),
+                                  onPressed: () {
+                                    setState(() {
+                                      backgroundImage = null;
+                                    });
+                                  }),
                         ],
                       ),
                     ),
@@ -370,7 +431,9 @@ class _ImageEditorState extends State<ImageEditor> {
                                                         sigmaX: _blurIntensity,
                                                         sigmaY: _blurIntensity),
                                                 child: Image.file(
-                                                    widget.imageFile,
+                                                    backgroundImage != null
+                                                        ? backgroundImage!
+                                                        : widget.imageFile,
                                                     fit: BoxFit.cover)),
                                           ),
                                         ),
@@ -468,7 +531,14 @@ class _ImageEditorState extends State<ImageEditor> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: const Icon(Icons.refresh)))
+                                    child: const Icon(Icons.refresh))),
+                            // Positioned(
+                            //     right: 20,
+                            //     top: 20,
+                            //     child: MyButton(
+                            //       onPressed: () {},
+                            //       child: const Icon(Icons.image),
+                            //     ))
                           ]),
                         ),
                       )),
