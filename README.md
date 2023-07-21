@@ -26,6 +26,7 @@ Fit image inside a box with a certain aspect ratio and fill the remaining space 
 
 ![Readme Banner](assets/designs/vorstellungsgrafik.png)
 
+<!--
 ## Images
 
 <p float="left">
@@ -36,3 +37,4 @@ Fit image inside a box with a certain aspect ratio and fill the remaining space 
   <img src="assets/designs/Blur%20Fit%202x%20free%20to%20use/screenshot-free-to-use-5.png" alt="Screenshot 5" width="16.2%" />
   <img src="assets/designs/Blur%20Fit%202x%20free%20to%20use/screenshot-free-to-use-6.png" alt="Screenshot 6" width="16.2%" />
 </p>
+-->
