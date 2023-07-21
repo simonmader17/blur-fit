@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/designs/icon-rounded.png" width="200" alt="Blur Fit Icon" />
+  <img src="assets/designs/icon-github.png" width="200" alt="Blur Fit Icon" /><br/>
 </p>
 
 <p align="center">
