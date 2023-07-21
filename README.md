@@ -3,11 +3,21 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Blur%20Fit-Play%20Store-green?logo=googleplay&logoColor=green" alt="Play Store" />
-  <img src="https://img.shields.io/badge/simonmader.at-Website-orange?logo=brave&logoColor=orange" alt="Website" />
-  <img src="https://img.shields.io/badge/mail%40simonmader.at-E--Mail-red?logo=gmail&logoColor=red" alt="E-Mail" />
-  <img src="https://img.shields.io/badge/simonmader-LinkedIn-blue?logo=linkedin&logoColor=blue" alt="LinkedIn" />
-  <img src="https://img.shields.io/badge/simonmader17-GitHub-lightgray?logo=github&logoColor=lightgray" alt="GitHub" />
+  <a href="https://play.google.com/store/apps/details?id=at.simonmader.blur_fit">
+    <img src="https://img.shields.io/badge/Blur%20Fit-Play%20Store-green?logo=googleplay&logoColor=green" alt="Play Store" />
+  </a>
+  <a href="https://simonmader.at/">
+    <img src="https://img.shields.io/badge/simonmader.at-Website-orange?logo=brave&logoColor=orange" alt="Website" />
+  </a>
+  <a href="mailto:mail@simonmader.at">  
+    <img src="https://img.shields.io/badge/mail%40simonmader.at-E--Mail-red?logo=gmail&logoColor=red" alt="E-Mail" />
+  </a>
+  <a href="https://www.linkedin.com/in/simonmader/">  
+    <img src="https://img.shields.io/badge/simonmader-LinkedIn-blue?logo=linkedin&logoColor=blue" alt="LinkedIn" />
+  </a>
+  <a href="https://github.com/simonmader17">  
+    <img src="https://img.shields.io/badge/simonmader17-GitHub-lightgray?logo=github&logoColor=lightgray" alt="GitHub" />
+  </a>
 </p>
 
 ## Description
