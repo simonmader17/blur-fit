@@ -38,9 +38,8 @@ Future<Uint8List> generateImage(
 
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
-    String fdatetime = DateFormat("yyyy-mm-dd_HHmms").format(tsdate);
-    // print(fdatetime);
-    await ImageGallerySaver.saveImage(pngBytes, name: fdatetime);
+    String fdatetime = DateFormat("yyyyMMdd-HHmmss").format(tsdate);
+    await ImageGallerySaver.saveImage(pngBytes, name: "blur-fit-$fdatetime");
     onSuccess();
 
     return pngBytes;
