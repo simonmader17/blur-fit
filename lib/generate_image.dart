@@ -4,8 +4,9 @@ import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/rendering.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import 'package:intl/intl.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
 
 Future<Uint8List> generateImage(
     RenderRepaintBoundary imageBoundary,
@@ -39,7 +40,13 @@ Future<Uint8List> generateImage(
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     DateTime tsdate = DateTime.fromMillisecondsSinceEpoch(timestamp);
     String fdatetime = DateFormat("yyyyMMdd-HHmmss").format(tsdate);
-    await ImageGallerySaver.saveImage(pngBytes, name: "blur-fit-$fdatetime");
+    String tmpDir = (await getTemporaryDirectory()).path;
+    String filePath = "$tmpDir/blur-fit-$fdatetime.jpg";
+    File file = File(filePath);
+    file.writeAsBytesSync(pngBytes);
+    GallerySaver.saveImage(filePath, albumName: "Blur Fit");
+    print("$filePath saved");
+
     onSuccess();
 
     return pngBytes;

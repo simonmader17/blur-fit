@@ -37,9 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.6
   path_provider: ^2.0.11
-  image_gallery_saver: ^1.7.1
   intl: ^0.17.0
   gradient_borders: ^0.2.0
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:
