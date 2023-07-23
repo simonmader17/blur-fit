@@ -301,20 +301,6 @@ class _ImageEditorState extends State<ImageEditor> {
                               )
                             ],
                           ),
-                          // const SizedBox(height: 17),
-                          // FittedBox(
-                          //     fit: BoxFit.fitWidth,
-                          //     child: Row(
-                          //       children: [
-                          //         Text("Select different background image: ",
-                          //             style: TextStyle(
-                          //                 fontFamily: APP_FONT,
-                          //                 fontSize: 22,
-                          //                 color: Colors.white)),
-                          //         MyButton(
-                          //             child: Text("test"), onPressed: () {})
-                          //       ],
-                          //     )),
                           const SizedBox(height: 17),
                           MySlider(
                             title: "Aspect Ratio",
@@ -439,28 +425,25 @@ class _ImageEditorState extends State<ImageEditor> {
                                         ),
                                         AspectRatio(
                                           aspectRatio: _aspectRatio,
-                                          child: Center(
-                                              child: Container(
-                                            margin: EdgeInsets.all(
-                                                halfOfImagesSmallestSide /
-                                                    (_aspectRatio >= 1
-                                                        ? _aspectRatio
-                                                        : 1 / _aspectRatio) *
-                                                    _insetPercentage),
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(
-                                                  (halfOfImagesSmallestSide -
-                                                          halfOfImagesSmallestSide *
-                                                              _insetPercentage) /
+                                          child: Container(
+                                              margin: EdgeInsets.all(
+                                                  halfOfImagesSmallestSide /
                                                       (_aspectRatio >= 1
                                                           ? _aspectRatio
                                                           : 1 / _aspectRatio) *
-                                                      _borderRadiusPercentage),
-                                              child: Image.file(
-                                                  widget.imageFile,
-                                                  fit: BoxFit.contain),
-                                            ),
-                                          )),
+                                                      _insetPercentage),
+                                              child: FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius
+                                                      .circular((widget
+                                                                  .sourceResolution /
+                                                              2) *
+                                                          _borderRadiusPercentage),
+                                                  child: Image.file(
+                                                      widget.imageFile),
+                                                ),
+                                              )),
                                         ),
                                       ],
                                     ),
