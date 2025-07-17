@@ -3,19 +3,20 @@
 </p>
 
 <p align="center">
-  <a href="https://play.google.com/store/apps/details?id=at.simonmader.blur_fit">
-    <img src="https://img.shields.io/badge/Blur%20Fit-Play%20Store-green?logo=googleplay&logoColor=green" alt="Play Store" />
+  <a href="https://fdroid-repo.simonmader.at/fdroid/repo/">
+    <img src="https://img.shields.io/badge/Blur%20Fit-My%20F--Droid%20Repo-%231976D2?logo=fdroid&logoColor=%231976D2" alt="My F-Droid Repo" />
+  </a>
+  <a href="https://fdroid-repo.simonmader.at/fdroid/repo/at.simonmader.blurfit_101.apk">
+    <img src="https://img.shields.io/badge/Blur%20Fit-APK-%233DDC84?logo=android&logoColor=%233DDC84
+" alt="Blur Fit APK" />
   </a>
   <a href="https://simonmader.at/">
-    <img src="https://img.shields.io/badge/simonmader.at-Website-orange?logo=brave&logoColor=orange" alt="Website" />
+    <img src="https://img.shields.io/badge/simonmader.at-Website-%23FF7139?logo=firefoxbrowser&logoColor=%23FF7139" alt="Website" />
   </a>
-  <a href="mailto:mail@simonmader.at">  
+  <a href="mailto:mail@simonmader.at">
     <img src="https://img.shields.io/badge/mail%40simonmader.at-E--Mail-red?logo=gmail&logoColor=red" alt="E-Mail" />
   </a>
-  <a href="https://www.linkedin.com/in/simonmader/">  
-    <img src="https://img.shields.io/badge/simonmader-LinkedIn-blue?logo=linkedin&logoColor=blue" alt="LinkedIn" />
-  </a>
-  <a href="https://github.com/simonmader17">  
+  <a href="https://github.com/simonmader17">
     <img src="https://img.shields.io/badge/simonmader17-GitHub-lightgray?logo=github&logoColor=lightgray" alt="GitHub" />
   </a>
 </p>
