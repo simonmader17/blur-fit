@@ -1,0 +1,3 @@
+- Fixed border radius calculation
+- Fixed saved filename
+- Images are now saved in a "Blur Fit" album
